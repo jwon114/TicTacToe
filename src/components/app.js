@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { buttonPress } from '../actions/index';
+import Tile from './Tile/Tile';
+import Style from '../../style/style.css';
 
 class App extends Component {
 
@@ -15,10 +17,16 @@ class App extends Component {
   render() {
     const { reduxState, dispatch } = this.props;
     return (
-      <div>
-        <h1>{reduxState.message}</h1>
-        <input value={this.state.inputValue} onChange={(e) => this.setState({ inputValue: e.target.value })} />
-        <button onClick={() => dispatch(buttonPress(this.state.inputValue))}>Button</button>
+      <div className={Style.container}>
+        <Tile value={1} />
+        <Tile value={2} />
+        <Tile value={3} />
+        <Tile value={4} />
+        <Tile value={5} />
+        <Tile value={6} />
+        <Tile value={7} />
+        <Tile value={8} />
+        <Tile value={9} />
       </div>
     );
   }
