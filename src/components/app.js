@@ -9,24 +9,42 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      initialMessage: 'greeting',
-      inputValue: '',
+      grid: [],
+      player: 'X',
     };
+  }
+
+  changeTurn() {
+    let { player } = this.state;
+    //player === 'X' ? player = 'Y' : player = 'X';
+    if (player === 'X') {
+      player = 'Y';
+    }
+    console.log(player)
+  }
+
+  handleClick(val) {
+    const { grid, player } = this.state;
+    if (grid[val] !== player) {
+      grid[val] = player;
+      this.changeTurn();
+      console.log(this.state)      
+    }
   }
 
   render() {
     const { reduxState, dispatch } = this.props;
     return (
       <div className={Style.container}>
-        <Tile value={1} />
-        <Tile value={2} />
-        <Tile value={3} />
-        <Tile value={4} />
-        <Tile value={5} />
-        <Tile value={6} />
-        <Tile value={7} />
-        <Tile value={8} />
-        <Tile value={9} />
+        <Tile click={() => this.handleClick(1)} value={1} />
+        <Tile click={() => this.handleClick(2)} value={2} />
+        <Tile click={() => this.handleClick(3)} value={3} />
+        <Tile click={() => this.handleClick(4)} value={4} />
+        <Tile click={() => this.handleClick(5)} value={5} />
+        <Tile click={() => this.handleClick(6)} value={6} />
+        <Tile click={() => this.handleClick(7)} value={7} />
+        <Tile click={() => this.handleClick(8)} value={8} />
+        <Tile click={() => this.handleClick(9)} value={9} />
       </div>
     );
   }
