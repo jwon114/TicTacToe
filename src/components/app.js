@@ -9,17 +9,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      grid: [],
+      grid: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       player: 'X',
     };
   }
 
   changeTurn() {
-    let { player } = this.state;
-    //player === 'X' ? player = 'Y' : player = 'X';
-    if (player === 'X') {
-      player = 'Y';
-    }
+    const { player } = this.state;
+    player === 'X' ? this.setState({ player: 'Y' }) : this.setState({ player: 'X' });
     console.log(player)
   }
 
@@ -28,7 +25,7 @@ class App extends Component {
     if (grid[val] !== player) {
       grid[val] = player;
       this.changeTurn();
-      console.log(this.state)      
+      console.log(grid)
     }
   }
 
