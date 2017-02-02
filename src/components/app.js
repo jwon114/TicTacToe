@@ -9,20 +9,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      grid: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      grid: ['', '', '', '', '', '', '', '', ''],
       player: 'X',
     };
   }
 
   changeTurn() {
     const { player } = this.state;
-    player === 'X' ? this.setState({ player: 'Y' }) : this.setState({ player: 'X' });
+    player === 'X' ? this.setState({ player: 'O' }) : this.setState({ player: 'X' });
     console.log(player)
   }
 
   handleClick(val) {
     const { grid, player } = this.state;
-    if (grid[val] !== player) {
+    if (grid[val] === '') {
       grid[val] = player;
       this.changeTurn();
       console.log(grid)
@@ -31,17 +31,18 @@ class App extends Component {
 
   render() {
     const { reduxState, dispatch } = this.props;
+    const { grid } = this.state;
     return (
       <div className={Style.container}>
-        <Tile click={() => this.handleClick(1)} value={1} />
-        <Tile click={() => this.handleClick(2)} value={2} />
-        <Tile click={() => this.handleClick(3)} value={3} />
-        <Tile click={() => this.handleClick(4)} value={4} />
-        <Tile click={() => this.handleClick(5)} value={5} />
-        <Tile click={() => this.handleClick(6)} value={6} />
-        <Tile click={() => this.handleClick(7)} value={7} />
-        <Tile click={() => this.handleClick(8)} value={8} />
-        <Tile click={() => this.handleClick(9)} value={9} />
+        <Tile click={() => this.handleClick(0)} value={grid[0]} />
+        <Tile click={() => this.handleClick(1)} value={grid[1]} />
+        <Tile click={() => this.handleClick(2)} value={grid[2]} />
+        <Tile click={() => this.handleClick(3)} value={grid[3]} />
+        <Tile click={() => this.handleClick(4)} value={grid[4]} />
+        <Tile click={() => this.handleClick(5)} value={grid[5]} />
+        <Tile click={() => this.handleClick(6)} value={grid[6]} />
+        <Tile click={() => this.handleClick(7)} value={grid[7]} />
+        <Tile click={() => this.handleClick(8)} value={grid[8]} />
       </div>
     );
   }
