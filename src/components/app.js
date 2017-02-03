@@ -11,6 +11,8 @@ class App extends Component {
     this.state = {
       grid: ['', '', '', '', '', '', '', '', ''],
       player: 'X',
+      draw: false,
+      win: false,
     };
   }
 
@@ -20,12 +22,17 @@ class App extends Component {
   }
 
   handleClick(val) {
-    const { grid, player } = this.state;
+    const { grid, player, draw } = this.state;
     if (grid[val] === '') {
       const newGrid = grid;
       newGrid[val] = player;
       this.setState({ grid: newGrid });
-      this.changeTurn();
+      this.isDraw();
+
+      if (!draw) {
+        this.checkEndGame();
+        this.changeTurn();
+      }
     }
   }
 
@@ -33,20 +40,26 @@ class App extends Component {
     const { grid } = this.state;
 
     // top left
-    if (grid[0] === grid[1] && grid[0] === grid[2] && grid[0] !== '') { console.log('win'); }
-    if (grid[0] === grid[3] && grid[0] === grid[6] && grid[0] !== '') { console.log('win'); }
-    if (grid[0] === grid[4] && grid[0] === grid[8] && grid[0] !== '') { console.log('win'); }
+    if (grid[0] === grid[1] && grid[0] === grid[2] && grid[0] !== '') { console.log('win'); this.setState({ win: true }); }
+    if (grid[0] === grid[3] && grid[0] === grid[6] && grid[0] !== '') { console.log('win'); this.setState({ win: true }); }
+    if (grid[0] === grid[4] && grid[0] === grid[8] && grid[0] !== '') { console.log('win'); this.setState({ win: true }); }
 
     // top right
-    if (grid[2] === grid[4] && grid[2] === grid[6] && grid[2] !== '') { console.log('win'); }
-    if (grid[2] === grid[5] && grid[2] === grid[8] && grid[2] !== '') { console.log('win'); }
+    if (grid[2] === grid[4] && grid[2] === grid[6] && grid[2] !== '') { console.log('win'); this.setState({ win: true }); }
+    if (grid[2] === grid[5] && grid[2] === grid[8] && grid[2] !== '') { console.log('win'); this.setState({ win: true }); }
 
     // vertical
-    if (grid[1] === grid[4] && grid[1] === grid[7] && grid[1] !== '') { console.log('win'); }
+    if (grid[1] === grid[4] && grid[1] === grid[7] && grid[1] !== '') { console.log('win'); this.setState({ win: true }); }
 
     // horizontal
-    if (grid[3] === grid[4] && grid[3] === grid[5] && grid[3] !== '') { console.log('win'); }
-    if (grid[6] === grid[7] && grid[6] === grid[8] && grid[6] !== '') { console.log('win'); }
+    if (grid[3] === grid[4] && grid[3] === grid[5] && grid[3] !== '') { console.log('win'); this.setState({ win: true }); }
+    if (grid[6] === grid[7] && grid[6] === grid[8] && grid[6] !== '') { console.log('win'); this.setState({ win: true }); }
+  }
+
+  isDraw() {
+    const { grid, win } = this.state;
+    const result = grid.every((element) => (element !== ''));
+    if (result && !win) { console.log('draw'); this.setState({ draw: true }); }
   }
 
   render() {
@@ -64,7 +77,6 @@ class App extends Component {
         <Tile click={() => this.handleClick(7)} value={grid[7]} />
         <Tile click={() => this.handleClick(8)} value={grid[8]} />
         {console.log(this.state)}
-        {this.checkEndGame()}
       </div>
     );
   }
