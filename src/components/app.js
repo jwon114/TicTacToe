@@ -27,6 +27,8 @@ class App extends Component {
       const newGrid = grid;
       newGrid[val] = player;
       this.setState({ grid: newGrid });
+
+      // check draw condition
       this.isDraw();
 
       if (!draw) {
@@ -39,27 +41,23 @@ class App extends Component {
   checkEndGame() {
     const { grid } = this.state;
 
-    // top left
-    if (grid[0] === grid[1] && grid[0] === grid[2] && grid[0] !== '') { console.log('win'); this.setState({ win: true }); }
-    if (grid[0] === grid[3] && grid[0] === grid[6] && grid[0] !== '') { console.log('win'); this.setState({ win: true }); }
-    if (grid[0] === grid[4] && grid[0] === grid[8] && grid[0] !== '') { console.log('win'); this.setState({ win: true }); }
-
-    // top right
-    if (grid[2] === grid[4] && grid[2] === grid[6] && grid[2] !== '') { console.log('win'); this.setState({ win: true }); }
-    if (grid[2] === grid[5] && grid[2] === grid[8] && grid[2] !== '') { console.log('win'); this.setState({ win: true }); }
-
-    // vertical
-    if (grid[1] === grid[4] && grid[1] === grid[7] && grid[1] !== '') { console.log('win'); this.setState({ win: true }); }
-
-    // horizontal
-    if (grid[3] === grid[4] && grid[3] === grid[5] && grid[3] !== '') { console.log('win'); this.setState({ win: true }); }
-    if (grid[6] === grid[7] && grid[6] === grid[8] && grid[6] !== '') { console.log('win'); this.setState({ win: true }); }
+    // win logic
+    if ((grid[0] === grid[1] && grid[0] === grid[2] && grid[0] !== '') ||
+    (grid[0] === grid[3] && grid[0] === grid[6] && grid[0] !== '') ||
+    (grid[0] === grid[4] && grid[0] === grid[8] && grid[0] !== '') ||
+    (grid[2] === grid[4] && grid[2] === grid[6] && grid[2] !== '') ||
+    (grid[2] === grid[5] && grid[2] === grid[8] && grid[2] !== '') ||
+    (grid[1] === grid[4] && grid[1] === grid[7] && grid[1] !== '') ||
+    (grid[3] === grid[4] && grid[3] === grid[5] && grid[3] !== '') ||
+    (grid[6] === grid[7] && grid[6] === grid[8] && grid[6] !== '')) {
+      this.setState({ win: true });
+    }
   }
 
   isDraw() {
     const { grid, win } = this.state;
     const result = grid.every((element) => (element !== ''));
-    if (result && !win) { console.log('draw'); this.setState({ draw: true }); }
+    if (result && !win) { this.setState({ draw: true }); }
   }
 
   render() {
