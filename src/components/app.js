@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { buttonPress } from '../actions/index';
 import Tile from './Tile/Tile';
+import EndGame from './EndGame/EndGame';
+import EndGameStyle from './EndGame/EndGame.css';
 import Style from '../../style/style.css';
 
 class App extends Component {
@@ -13,6 +15,7 @@ class App extends Component {
       player: 'X',
       draw: false,
       win: false,
+      message: '',
     };
   }
 
@@ -50,19 +53,19 @@ class App extends Component {
     (grid[1] === grid[4] && grid[1] === grid[7] && grid[1] !== '') ||
     (grid[3] === grid[4] && grid[3] === grid[5] && grid[3] !== '') ||
     (grid[6] === grid[7] && grid[6] === grid[8] && grid[6] !== '')) {
-      this.setState({ win: true });
+      this.setState({ win: true, message: 'wins' });
     }
   }
 
   isDraw() {
     const { grid, win } = this.state;
     const result = grid.every((element) => (element !== ''));
-    if (result && !win) { this.setState({ draw: true }); }
+    if (result && !win) { this.setState({ draw: true, message: 'draw' }); }
   }
 
   render() {
     const { reduxState, dispatch } = this.props;
-    const { grid } = this.state;
+    const { grid, message, win, draw } = this.state;
     return (
       <div className={Style.container}>
         <Tile click={() => this.handleClick(0)} value={grid[0]} />
@@ -75,6 +78,7 @@ class App extends Component {
         <Tile click={() => this.handleClick(7)} value={grid[7]} />
         <Tile click={() => this.handleClick(8)} value={grid[8]} />
         {console.log(this.state)}
+        {win || draw ? <EndGame className={EndGameStyle.overlay} message={message} /> : null}
       </div>
     );
   }
