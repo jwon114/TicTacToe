@@ -17,16 +17,36 @@ class App extends Component {
   changeTurn() {
     const { player } = this.state;
     player === 'X' ? this.setState({ player: 'O' }) : this.setState({ player: 'X' });
-    console.log(player)
   }
 
   handleClick(val) {
     const { grid, player } = this.state;
     if (grid[val] === '') {
-      grid[val] = player;
+      const newGrid = grid;
+      newGrid[val] = player;
+      this.setState({ grid: newGrid });
       this.changeTurn();
-      console.log(grid)
     }
+  }
+
+  checkEndGame() {
+    const { grid } = this.state;
+
+    // top left
+    if (grid[0] === grid[1] && grid[0] === grid[2] && grid[0] !== '') { console.log('win'); }
+    if (grid[0] === grid[3] && grid[0] === grid[6] && grid[0] !== '') { console.log('win'); }
+    if (grid[0] === grid[4] && grid[0] === grid[8] && grid[0] !== '') { console.log('win'); }
+
+    // top right
+    if (grid[2] === grid[4] && grid[2] === grid[6] && grid[2] !== '') { console.log('win'); }
+    if (grid[2] === grid[5] && grid[2] === grid[8] && grid[2] !== '') { console.log('win'); }
+
+    // vertical
+    if (grid[1] === grid[4] && grid[1] === grid[7] && grid[1] !== '') { console.log('win'); }
+
+    // horizontal
+    if (grid[3] === grid[4] && grid[3] === grid[5] && grid[3] !== '') { console.log('win'); }
+    if (grid[6] === grid[7] && grid[6] === grid[8] && grid[6] !== '') { console.log('win'); }
   }
 
   render() {
@@ -43,6 +63,8 @@ class App extends Component {
         <Tile click={() => this.handleClick(6)} value={grid[6]} />
         <Tile click={() => this.handleClick(7)} value={grid[7]} />
         <Tile click={() => this.handleClick(8)} value={grid[8]} />
+        {console.log(this.state)}
+        {this.checkEndGame()}
       </div>
     );
   }
