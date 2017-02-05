@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { buttonPress } from '../actions/index';
 import Tile from './Tile/Tile';
 import EndGame from './EndGame/EndGame';
-import EndGameStyle from './EndGame/EndGame.css';
 import Style from '../../style/style.css';
 
 class App extends Component {
@@ -16,6 +15,7 @@ class App extends Component {
       draw: false,
       win: false,
       message: '',
+      showModal: false,
     };
   }
 
@@ -65,7 +65,7 @@ class App extends Component {
 
   render() {
     const { reduxState, dispatch } = this.props;
-    const { grid, message, win, draw } = this.state;
+    const { grid, message, win, draw, showModal } = this.state;
     return (
       <div className={Style.container}>
         <Tile click={() => this.handleClick(0)} value={grid[0]} />
@@ -78,7 +78,7 @@ class App extends Component {
         <Tile click={() => this.handleClick(7)} value={grid[7]} />
         <Tile click={() => this.handleClick(8)} value={grid[8]} />
         {console.log(this.state)}
-        {win || draw ? <EndGame className={EndGameStyle.overlay} message={message} /> : null}
+        {win || draw ? <EndGame message={message} showModal={true} /> : null}
       </div>
     );
   }

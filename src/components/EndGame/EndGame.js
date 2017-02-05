@@ -1,7 +1,12 @@
 import React from 'react';
+import Modal from 'React-modal';
+import EndGameStyle from './EndGame.css';
 
 export default (props) => (
   <div>
-    <Modal>{props.message}</Modal>
+    <Modal
+      isOpen={true}
+      style={EndGameStyle}
+    />
   </div>
 );
