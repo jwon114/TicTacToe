@@ -53,14 +53,24 @@ class App extends Component {
     (grid[1] === grid[4] && grid[1] === grid[7] && grid[1] !== '') ||
     (grid[3] === grid[4] && grid[3] === grid[5] && grid[3] !== '') ||
     (grid[6] === grid[7] && grid[6] === grid[8] && grid[6] !== '')) {
-      this.setState({ win: true, message: 'wins' });
+      this.setState({ win: true, message: 'wins', showModal: true });
     }
   }
 
   isDraw() {
     const { grid, win } = this.state;
     const result = grid.every((element) => (element !== ''));
-    if (result && !win) { this.setState({ draw: true, message: 'draw' }); }
+    if (result && !win) { this.setState({ draw: true, message: 'draw', showModal: true }); }
+  }
+
+  restart() {
+    this.setState({
+      grid: ['', '', '', '', '', '', '', '', ''],
+      player: 'X',
+      draw: false,
+      win: false,
+      message: '',
+      showModal: false });
   }
 
   render() {
@@ -78,7 +88,7 @@ class App extends Component {
         <Tile click={() => this.handleClick(7)} value={grid[7]} />
         <Tile click={() => this.handleClick(8)} value={grid[8]} />
         {console.log(this.state)}
-        {win || draw ? <EndGame message={message} showModal={true} /> : null}
+        {win || draw ? <EndGame message={message} showModal={showModal} restart={() => this.restart()} /> : null}
       </div>
     );
   }
