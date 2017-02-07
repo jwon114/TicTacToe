@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from 'React-modal';
-import EndGameStyle from './EndGame.css';
 
 export default (props) => (
   <div>
@@ -9,15 +8,17 @@ export default (props) => (
       contentLabel="End Game"
       style={{
         overlay: {
-          backgroundColor: 'papayawhip',
+
         },
         content: {
           position: 'absolute',
           color: 'lightsteelblue',
+          background: 'rgba(255, 255, 255, 0.5)',
         },
       }}
     >
-      <h1>END GAME</h1>
+      <h1>GAME OVER</h1>
+      <p>{props.message}</p>
       <button onClick={() => props.restart()}>Restart</button>
     </Modal>
   </div>

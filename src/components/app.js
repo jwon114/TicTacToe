@@ -12,8 +12,9 @@ class App extends Component {
     this.state = {
       grid: ['', '', '', '', '', '', '', '', ''],
       player: 'X',
-      draw: false,
-      win: false,
+      result: '',
+      //draw: false,
+      //win: false,
       message: '',
       showModal: false,
     };
@@ -25,7 +26,7 @@ class App extends Component {
   }
 
   handleClick(val) {
-    const { grid, player, draw } = this.state;
+    const { grid, player, draw, win, result } = this.state;
     if (grid[val] === '') {
       const newGrid = grid;
       newGrid[val] = player;
@@ -34,7 +35,7 @@ class App extends Component {
       // check draw condition
       this.isDraw();
 
-      if (!draw) {
+      if (!result) {
         this.checkEndGame();
         this.changeTurn();
       }
@@ -42,7 +43,7 @@ class App extends Component {
   }
 
   checkEndGame() {
-    const { grid } = this.state;
+    const { grid, player } = this.state;
 
     // win logic
     if ((grid[0] === grid[1] && grid[0] === grid[2] && grid[0] !== '') ||
@@ -53,29 +54,30 @@ class App extends Component {
     (grid[1] === grid[4] && grid[1] === grid[7] && grid[1] !== '') ||
     (grid[3] === grid[4] && grid[3] === grid[5] && grid[3] !== '') ||
     (grid[6] === grid[7] && grid[6] === grid[8] && grid[6] !== '')) {
-      this.setState({ win: true, message: 'wins', showModal: true });
+      this.setState({ result: 'win', message: 'Player ' + player + ' Wins', showModal: true });
     }
   }
 
   isDraw() {
     const { grid, win } = this.state;
     const result = grid.every((element) => (element !== ''));
-    if (result && !win) { this.setState({ draw: true, message: 'draw', showModal: true }); }
+    if (result && !win) { this.setState({ result: 'draw', message: 'Draw Game', showModal: true }); }
   }
 
   restart() {
     this.setState({
       grid: ['', '', '', '', '', '', '', '', ''],
       player: 'X',
-      draw: false,
-      win: false,
+      result: '',
+      //draw: false,
+      //win: false,
       message: '',
       showModal: false });
   }
 
   render() {
     const { reduxState, dispatch } = this.props;
-    const { grid, message, win, draw, showModal } = this.state;
+    const { grid, message, win, draw, showModal, result } = this.state;
     return (
       <div className={Style.container}>
         <Tile click={() => this.handleClick(0)} value={grid[0]} />
@@ -88,7 +90,7 @@ class App extends Component {
         <Tile click={() => this.handleClick(7)} value={grid[7]} />
         <Tile click={() => this.handleClick(8)} value={grid[8]} />
         {console.log(this.state)}
-        {win || draw ? <EndGame message={message} showModal={showModal} restart={() => this.restart()} /> : null}
+        {result !== '' ? <EndGame message={message} showModal={showModal} restart={() => this.restart()} message={message} /> : null}
       </div>
     );
   }
